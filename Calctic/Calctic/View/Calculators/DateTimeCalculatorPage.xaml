@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:custom="clr-namespace:Calctic.Extensions.CustomControls"
+    xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:styles="clr-namespace:Calctic.Resources.StyleReferences"
+    x:Class="Calctic.View.DateTimeCalculatorPage"
+    xmlns:app="clr-namespace:Calctic"
+    BindingContext="{x:Static app:ViewModelLocator.DateTimeCalculatorPageViewModel}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <styles:ButtonStyleReferences/>
+                <styles:FrameStyleReferences/>
+                <styles:TextStyleReferences/>
+                <styles:CalculatorStyleReferences/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <Label AutomationId="TitleLabel"
+                   HorizontalOptions="CenterAndExpand"
+                   TextColor="{StaticResource BasicCalculatorBackgroundColor}"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   Text="{Binding Title}"/>
+            <Grid VerticalOptions="FillAndExpand" Margin="0,10,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.25*"/>
+                    <RowDefinition Height="0.25*"/>
+                    <RowDefinition Height="0.45*"/>
+                    <RowDefinition Height="0.05*"/>
+                </Grid.RowDefinitions>
+
+                <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand">
+                    <Label Text="From:" HorizontalOptions="CenterAndExpand"/>
+                    <StackLayout HorizontalOptions="CenterAndExpand">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Date" VerticalTextAlignment="Center"/>
+                            <custom:CustomDatePicker AutomationId="FirstInputDatePicker"
+                                    FontSize="Large"
+                                    WidthRequest="150"
+                                    IsEnabled="{Binding IsAllFieldsEnabled}"
+                                    Date="{Binding FirstInputDate, Mode=TwoWay}"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Time" VerticalTextAlignment="Center"/>
+                            <custom:CustomTimePicker AutomationId="FirstInputTimePicker"
+                                    FontSize="Large"
+                                    WidthRequest="150"
+                                    IsEnabled="{Binding IsAllFieldsEnabled}"
+                                    Time="{Binding FirstInputTime, Mode=TwoWay}"/>
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+
+                <StackLayout Grid.Row="1"
+                             Orientation="Vertical" HorizontalOptions="CenterAndExpand">
+                    <Label Text="To:" HorizontalOptions="CenterAndExpand"/>
+                    <StackLayout HorizontalOptions="CenterAndExpand">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Date" VerticalTextAlignment="Center"/>
+                            <custom:CustomDatePicker AutomationId="SecondInputDatePicker"
+                                    FontSize="Large"
+                                    WidthRequest="150"
+                                    IsEnabled="{Binding IsAllFieldsEnabled}"
+                                    Date="{Binding SecondInputDate, Mode=TwoWay}"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Time" VerticalTextAlignment="Center"/>
+                            <custom:CustomTimePicker AutomationId="SecondInputTimePicker"
+                                    FontSize="Large"
+                                    WidthRequest="150"
+                                    IsEnabled="{Binding IsAllFieldsEnabled}"
+                                    Time="{Binding SecondInpuTime, Mode=TwoWay}"/>
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+                
+                <StackLayout Grid.Row="2"
+                             Orientation="Vertical">
+                    <pancakeView:PancakeView AutomationId="AnswerPancakeView"
+                        CornerRadius="15,15,15,15"
+                        VerticalOptions="FillAndExpand"
+                        HorizontalOptions="FillAndExpand"
+                        Margin="10,0,10,0"
+                        Padding="16"
+                        IsClippedToBounds="True"
+                        IsVisible="{Binding IsResultVisible}">
+                        <pancakeView:PancakeView.Border>
+                            <pancakeView:Border Color="{StaticResource BorderColor}" Thickness="1"/>
+                        </pancakeView:PancakeView.Border>
+
+                        <StackLayout>
+                            <StackLayout.Resources>
+                                <Style TargetType="Label">
+                                    <Setter Property="FontSize">
+                                        <OnPlatform x:TypeArguments="x:Double"
+                                                    iOS="17"
+                                                    Android="19"/>
+                                    </Setter>
+                                </Style>
+                            </StackLayout.Resources>
+                            
+                            <Label Text="Results" HorizontalOptions="CenterAndExpand"/>
+                            <Grid
+                                HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label AutomationId="DaysAnswerLabel"
+                                       HorizontalOptions="End" VerticalOptions="CenterAndExpand"
+                                       Text="{Binding DaysAnswer}"/>
+                                <Label AutomationId="HoursAnswerLabel"
+                                       HorizontalOptions="End" VerticalOptions="CenterAndExpand"
+                                       Grid.Row="1"
+                                       Text="{Binding HoursAnswer}"/>
+                                <Label AutomationId="MinutesAnswerLabel"
+                                       HorizontalOptions="End" VerticalOptions="CenterAndExpand"
+                                       Grid.Row="2"
+                                       Text="{Binding MinutesAnswer}"/>
+
+                                <Label HorizontalOptions="End" VerticalOptions="CenterAndExpand"
+                                       Grid.Column="1"
+                                       Text="Days"/>
+                                <Label HorizontalOptions="End" VerticalOptions="CenterAndExpand"
+                                       Grid.Column="1"
+                                       Grid.Row="1"
+                                       Text="Hours"/>
+                                <Label HorizontalOptions="End" VerticalOptions="CenterAndExpand"
+                                       Grid.Column="1"
+                                       Grid.Row="2"
+                                       Text="Minutes"/>
+                            </Grid>
+                        </StackLayout>
+                    </pancakeView:PancakeView>
+
+                    <StackLayout>
+                        <Button AutomationId="CalculateAnswerButton"
+                            Padding="10"
+                            Margin="50,10,50,15"
+                            BackgroundColor="{StaticResource ButtonCalculatorColor}"
+                            Style="{StaticResource BasicCalculatorStyle}"
+                            FontSize="Medium"
+                            Text="{Binding AnswerButtonText}"
+                            Command="{Binding CalculateAnswerCommand}"/>
+                    </StackLayout>
+                </StackLayout>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

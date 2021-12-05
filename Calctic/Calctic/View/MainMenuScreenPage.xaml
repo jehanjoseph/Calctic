@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:styles="clr-namespace:Calctic.Resources.StyleReferences"
+    xmlns:app="clr-namespace:Calctic"
+    x:Class="Calctic.View.MainMenuScreenPage"
+    BackgroundColor="{StaticResource AppBackgroundColor}"
+    BindingContext="{x:Static app:ViewModelLocator.MainMenuScreenPageViewModel}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <styles:ButtonStyleReferences/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid VerticalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.2*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="0.25*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition Width="0.1*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label AutomationId="TitleLabel"
+                   Grid.Column="1"
+                   TextColor="{StaticResource BasicCalculatorBackgroundColor}"
+                   VerticalTextAlignment="Center"
+                   HorizontalTextAlignment="Center"
+                   FontAttributes="Bold"
+                   FontSize="35"
+                   Text="{Binding Title}"
+                   Margin="10,10,10,30"/>
+
+            <pancakeView:PancakeView
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    BackgroundColor="#FBF5FF"
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand"
+                    CornerRadius="30"
+                    Margin="10">
+                <pancakeView:PancakeView.Border>
+                    <pancakeView:Border Color="#929292" Thickness="1"/>
+                </pancakeView:PancakeView.Border>
+                <StackLayout Padding="35, 50, 35, 50">
+                    <StackLayout.Resources>
+                        <Style TargetType="Button" BasedOn="{StaticResource BasicCalculatorStyle}">
+                            <Setter Property="FontSize" Value="Small"/>
+                            <Setter Property="FontAttributes" Value="Bold"/>
+                            <Setter Property="TextColor" Value="White"/>
+                            <Setter Property="VerticalOptions" Value="Fill"/>
+                            <Setter Property="HorizontalOptions" Value="Fill"/>
+                            <Setter Property="Margin" Value="5"/>
+                        </Style>
+                    </StackLayout.Resources>
+
+                    <Button AutomationId="CalculatorClickedButton"
+                            BackgroundColor="{StaticResource ButtonCalculatorColor}"
+                            Text="Calculator"
+                            Command="{Binding CalculatorClickedCommand}"/>
+
+                    <Button AutomationId="ConverterClickedButton"
+                            BackgroundColor="{StaticResource ButtonConverterColor}"
+                            Text="Converter"
+                            Command="{Binding ConverterClickedCommand}"/>
+
+                    <Button AutomationId="FinanceClickedButton"
+                            BackgroundColor="{StaticResource ButtonFinanceColor}"
+                            Text="Finance"
+                            Command="{Binding FinanceClickedCommand}"/>
+
+                    <Button AutomationId="HealthClickedButton"
+                            BackgroundColor="{StaticResource ButtonHealthColor}"
+                            Text="Health"
+                            Command="{Binding HealthClickedCommand}"/>
+                </StackLayout>
+            </pancakeView:PancakeView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

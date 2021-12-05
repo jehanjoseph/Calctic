@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:custom="clr-namespace:Calctic.Extensions.CustomControls"
+    x:Class="Calctic.Resources.StyleReferences.ButtonStyleReferences">
+
+    <Color x:Key="ButtonFontColor">Black</Color>
+    <Color x:Key="ButtonCalculatorColor">#C76261</Color>
+    <Color x:Key="ButtonConverterColor">#C7C41E</Color>
+    <Color x:Key="ButtonFinanceColor">#5DBB5D</Color>
+    <Color x:Key="ButtonHealthColor">#1638C1</Color>
+    <Color x:Key="ButtonConfirmColor">#107eb1</Color>
+    <Color x:Key="ButtonCancelColor">#de5f5f</Color>
+
+    <Style x:Key="BasicCalculatorStyle" TargetType="Button">
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="CornerRadius" Value="15"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="FontSize" Value="30"/>
+        <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+        <Setter Property="VerticalOptions" Value="FillAndExpand"/>
+    </Style>
+
+    <Style x:Key="CustomButtonAppStyle" Class="ClickableLabel" TargetType="custom:CustomButton">
+        <Setter Property="Margin" Value="10,0,10,0"/>
+        <Setter Property="BackgroundColor" Value="White"/>
+        <Setter Property="BorderColor" Value="DarkGray"/>
+        <Setter Property="BorderWidth" Value="1"/>
+        <Setter Property="FontSize" Value="Large"/>
+        <Setter Property="TextColor" Value="{StaticResource ButtonFontColor}"/>
+    </Style>
+
+    <Style x:Key="ClickableLabelButton" Class="ClickableLabel" TargetType="custom:CustomButton"
+           BasedOn="{StaticResource CustomButtonAppStyle}">
+        <Style.Triggers>
+            <Trigger TargetType="custom:CustomButton" Property="IsSelected" Value="true">
+                <Setter Property="TextColor" Value="PaleVioletRed"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="ClickableLabelBorderColorClick" TargetType="custom:CustomButton"
+           BasedOn="{StaticResource CustomButtonAppStyle}">
+        <Style.Triggers>
+            <Trigger TargetType="custom:CustomButton" Property="IsSelected" Value="true">
+                <Setter Property="BorderWidth" Value="3"/>
+                <Setter Property="BorderColor" Value="PaleVioletRed"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

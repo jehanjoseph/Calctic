@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:custom="clr-namespace:Calctic.Extensions.CustomControls"
+    xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:styles="clr-namespace:Calctic.Resources.StyleReferences"
+    x:Class="Calctic.View.Health.AgeHealthPage"
+    xmlns:app="clr-namespace:Calctic"
+    BindingContext="{x:Static app:ViewModelLocator.AgeHealthPageViewModel}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <styles:ButtonStyleReferences/>
+                <styles:FrameStyleReferences/>
+                <styles:TextStyleReferences/>
+                <styles:CalculatorStyleReferences/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="{StaticResource AppBackgroundColor}"
+                     VerticalOptions="FillAndExpand">
+            <Label AutomationId="PageTitleLabel"
+                   HorizontalOptions="CenterAndExpand"
+                   TextColor="{StaticResource ButtonHealthColor}"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   Text="{Binding Title}"/>
+            <Grid VerticalOptions="FillAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.25*"/>
+                    <RowDefinition Height="0.25*"/>
+                    <RowDefinition Height="0.5*"/>
+                </Grid.RowDefinitions>
+
+                <StackLayout VerticalOptions="FillAndExpand"
+                             HorizontalOptions="CenterAndExpand">
+                    <Label HorizontalOptions="CenterAndExpand"
+                           VerticalOptions="CenterAndExpand"
+                           Text="Date of Birth"/>
+                    <custom:CustomDatePicker AutomationId="BirthDatePicker"
+                                FontSize="Title"
+                                WidthRequest="150"
+                                IsEnabled="{Binding IsAllFieldsEnabled}"
+                                Date="{Binding BirthDate, Mode=TwoWay}"/>
+                    <StackLayout VerticalOptions="CenterAndExpand"
+                                 HorizontalOptions="CenterAndExpand">
+                    </StackLayout>
+                </StackLayout>
+
+                <StackLayout Grid.Row="1"
+                             VerticalOptions="FillAndExpand"
+                             HorizontalOptions="CenterAndExpand">
+                    <Label HorizontalOptions="CenterAndExpand"
+                           VerticalOptions="CenterAndExpand"
+                           Text="Age at Date"/>
+                    <custom:CustomDatePicker AutomationId="TargetDatePicker"
+                                FontSize="Title"
+                                WidthRequest="150"
+                                IsEnabled="{Binding IsAllFieldsEnabled}"
+                                Date="{Binding TargetDate, Mode=TwoWay}"/>
+                    <StackLayout VerticalOptions="CenterAndExpand"
+                                 HorizontalOptions="CenterAndExpand">
+                    </StackLayout>
+                </StackLayout>
+
+                <StackLayout Grid.Row="2">
+                    <pancakeView:PancakeView AutomationId="AgeAnswerPancakeView"
+                        CornerRadius="15,15,15,15"
+                        VerticalOptions="FillAndExpand"
+                        HorizontalOptions="FillAndExpand"
+                        Margin="10,0,10,0"
+                        Padding="16"
+                        IsClippedToBounds="True"
+                        IsVisible="{Binding IsResultVisible}">
+                        <pancakeView:PancakeView.Border>
+                            <pancakeView:Border Color="{StaticResource BorderColor}" Thickness="1"/>
+                        </pancakeView:PancakeView.Border>
+
+                        <StackLayout HorizontalOptions="FillAndExpand">
+                            <StackLayout.Resources>
+                                <Style TargetType="Label">
+                                    <Setter Property="FontSize">
+                                        <OnPlatform x:TypeArguments="x:Double"
+                                                    iOS="23"
+                                                    Android="25"/>
+                                    </Setter>
+                                </Style>
+                            </StackLayout.Resources>
+                            <Label Text="Your Age" HorizontalOptions="Center"/>
+                            <Grid
+                                HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label AutomationId="YearAnswerLabel"
+                                       HorizontalOptions="End" VerticalOptions="CenterAndExpand"
+                                       Text="{Binding YearsAnswer}"/>
+                                <Label AutomationId="MonthAnswerLabel"
+                                       HorizontalOptions="End" VerticalOptions="CenterAndExpand"
+                                       Grid.Row="1"
+                                       Text="{Binding MonthsAnswer}"/>
+                                <Label AutomationId="DaysAnswerLabel"
+                                       HorizontalOptions="End" VerticalOptions="CenterAndExpand"
+                                       Grid.Row="2"
+                                       Text="{Binding DaysAnswer}"/>
+
+                                <Label HorizontalOptions="End" VerticalOptions="CenterAndExpand"
+                                       Grid.Column="1"
+                                       Text="Years"/>
+                                <Label HorizontalOptions="End" VerticalOptions="CenterAndExpand"
+                                       Grid.Column="1"
+                                       Grid.Row="1"
+                                       Text="Months"/>
+                                <Label HorizontalOptions="End" VerticalOptions="CenterAndExpand"
+                                       Grid.Column="1"
+                                       Grid.Row="2"
+                                       Text="Days"/>
+                            </Grid>
+                        </StackLayout>
+                    </pancakeView:PancakeView>
+
+                    <StackLayout>
+                        <Button AutomationId="CalculateAnswerButton"
+                            Padding="10"
+                            Margin="50,10,50,15"
+                            BackgroundColor="{StaticResource ButtonHealthColor}"
+                            Style="{StaticResource BasicCalculatorStyle}"
+                            FontSize="Medium"
+                            Text="{Binding AnswerButtonText}"
+                            Command="{Binding CalculateAnswerCommand}"/>
+                    </StackLayout>
+                </StackLayout>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

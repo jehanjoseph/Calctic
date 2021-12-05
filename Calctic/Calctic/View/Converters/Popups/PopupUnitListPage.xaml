@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+                 xmlns:styles="clr-namespace:Calctic.Resources.StyleReferences"
+                 x:Class="Calctic.View.Converters.Popups.PopupUnitListPage">
+    <pages:PopupPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <styles:ButtonStyleReferences/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </pages:PopupPage.Resources>
+
+   <pages:PopupPage.Animation>
+        <animations:MoveAnimation
+            PositionIn="Bottom"
+            PositionOut="Bottom"
+            DurationIn="200"
+            DurationOut="200"
+            HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+
+    <pancakeView:PancakeView
+        CornerRadius="15,15,15,15"
+        VerticalOptions="Center"
+        HorizontalOptions="FillAndExpand"
+        Margin="10,40,10,0"
+        Padding="16"
+        IsClippedToBounds="True"
+        BackgroundColor="White">
+        <StackLayout HeightRequest="500">
+            <StackLayout Orientation="Horizontal"
+                         HorizontalOptions="FillAndExpand">
+                <Label AutomationId="TitleLabel"
+                       Text="{Binding Title}"
+                       TextColor="Black"
+                       FontSize="Medium"
+                       FontAttributes="Bold"
+                       HorizontalOptions="CenterAndExpand"/>
+            </StackLayout>
+
+            <ListView AutomationId="PopupUnitListView"
+                      x:Name="UnitListView"
+                      ItemsSource="{Binding InputUnitList, Mode=TwoWay}"
+                      SelectionMode="Single"
+                      SelectedItem="{Binding SelectedUnit, Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Label FontSize="Small"
+                                TextColor="Black"
+                                VerticalOptions="CenterAndExpand">
+                                <Label.Text>
+                                    <MultiBinding StringFormat="{}{0} - {1}">
+                                        <Binding Path="Symbol" />
+                                        <Binding Path="Name" />
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <StackLayout Orientation="Horizontal"
+                         HorizontalOptions="FillAndExpand">
+                <Button AutomationId="PopupCancelButton"
+                        x:Name="CancelButton"
+                        Text="Cancel"
+                        TextColor="{StaticResource ButtonCancelColor}"
+                        BackgroundColor="White"
+                        HorizontalOptions="FillAndExpand"
+                        Command="{Binding CancelCommand}"/>
+                <Button AutomationId="PopupConfirmButton"
+                        x:Name="ConfirmButton"
+                        Text="Confirm"
+                        TextColor="{StaticResource ButtonConfirmColor}"
+                        BackgroundColor="White"
+                        HorizontalOptions="FillAndExpand"
+                        Command="{Binding ConfirmCommand}"/>
+            </StackLayout>
+        </StackLayout>
+    </pancakeView:PancakeView>
+</pages:PopupPage>

@@ -1,0 +1,22 @@
+[
+  {
+    "Symbol": "m/s",
+    "Name": "Meter per second"
+  },
+  {
+    "Symbol": "km/h",
+    "Name": "Kilometer per hour"
+  },
+  {
+    "Symbol": "mph",
+    "Name": "Mile per hour"
+  },
+  {
+    "Symbol": "kn",
+    "Name": "Knot"
+  },
+  {
+    "Symbol": "in/s",
+    "Name": "Inch per second"
+  }
+]

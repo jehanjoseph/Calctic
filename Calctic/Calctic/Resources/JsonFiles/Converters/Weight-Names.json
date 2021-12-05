@@ -1,0 +1,22 @@
+[
+  {
+    "Symbol": "kg",
+    "Name": "Kilogram"
+  },
+  {
+    "Symbol": "g",
+    "Name": "Gram"
+  },
+  {
+    "Symbol": "lb",
+    "Name": "Pound"
+  },
+  {
+    "Symbol": "oz",
+    "Name": "Ounce"
+  },
+  {
+    "Symbol": "t",
+    "Name": "Metric Ton"
+  }
+]

@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:custom="clr-namespace:Calctic.Extensions.CustomControls"
+    xmlns:styles="clr-namespace:Calctic.Resources.StyleReferences"
+    x:Class="Calctic.Resources.StyleReferences.CalculatorStyleReferences">
+    <ResourceDictionary.MergedDictionaries>
+        <styles:ButtonStyleReferences/>
+        <styles:TextStyleReferences/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Color x:Key="BorderColor">#929292</Color>
+
+    <ControlTemplate x:Key="CalculatorKeypadControlTemplate">
+        <pancakeView:PancakeView
+                BindingContext="{Binding Source={RelativeSource TemplatedParent}}"
+                Margin="5,0,5,0"
+                Padding="5"
+                CornerRadius="20"
+                Grid.Row="2">
+            <Grid Padding="5" VerticalOptions="FillAndExpand">
+                <Grid.Resources>
+                    <Style TargetType="Button" BasedOn="{StaticResource BasicCalculatorStyle}">
+                        <Setter Property="BackgroundColor" Value="{TemplateBinding KeyboardBackgroundColor}"/>
+                        <Setter Property="CommandParameter" Value="{Binding Source={RelativeSource Self}}"/>
+                    </Style>
+                </Grid.Resources>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Button AutomationId="Number1Button"
+                    x:Name="Button7"
+                    Text="7"
+                    Command="{TemplateBinding InputCommand}"/>
+                <Button AutomationId="Number2Button"
+                    x:Name="Button8"
+                    Grid.Column="1"
+                    Text="8"
+                    Command="{TemplateBinding InputCommand}"/>
+                <Button AutomationId="Number3Button"
+                    x:Name="Button9"
+                    Grid.Column="2"
+                    Text="9"
+                    Command="{TemplateBinding InputCommand}"/>
+                <Button AutomationId="AcButton"
+                    Grid.Column="3"
+                    Grid.RowSpan="2"
+                    Text="AC"
+                    Command="{TemplateBinding ClearAllInputCommand}"/>
+
+                <Button AutomationId="Number4Button"
+                    x:Name="Button4"
+                    Grid.Row="1"
+                    Text="4"
+                    Command="{TemplateBinding InputCommand}"/>
+                <Button AutomationId="Number5Button"
+                    x:Name="Button5"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Text="5"
+                    Command="{TemplateBinding InputCommand}"/>
+                <Button AutomationId="Number6Button"
+                    x:Name="Button6"
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Text="6"
+                    Command="{TemplateBinding InputCommand}"/>
+
+                <Button AutomationId="Number7Button"
+                    x:Name="Button1"
+                    Grid.Row="2"
+                    Text="1"
+                    Command="{TemplateBinding InputCommand}"/>
+                <Button AutomationId="Number8Button"
+                    x:Name="Button2"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Text="2"
+                    Command="{TemplateBinding InputCommand}"/>
+                <Button AutomationId="Number9Button"
+                    x:Name="Button3"
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Text="3"
+                    Command="{TemplateBinding InputCommand}"/>
+                <Button AutomationId="EraseButton"
+                    Grid.Row="2"
+                    Grid.Column="3"
+                    Grid.RowSpan="2"
+                    Text="&#x232B;"
+                    Command="{TemplateBinding EraseInputCommand}"/>
+
+                <Button AutomationId="NumberZeroButton"
+                    x:Name="ButtonZero"
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Text="0"
+                    Command="{TemplateBinding InputCommand}">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button"
+                                     Binding="{TemplateBinding IsNumericalSignButtonVisible}"
+                                     Value="True">
+                            <Setter Property="Grid.Column" Value="0"/>
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Button AutomationId="PeriodButton"
+                    Grid.Row="3"
+                    Grid.Column="2"
+                    Text="."
+                    Command="{TemplateBinding PeriodCommand}">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button"
+                                     Binding="{TemplateBinding IsNumericalSignButtonVisible}"
+                                     Value="True">
+                            <Setter Property="Grid.Column" Value="1"/>
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Button AutomationId="NumericalSignButton"
+                    Grid.Row="3"
+                    Grid.Column="2"
+                    IsVisible="False"
+                    Text="+/-"
+                    Command="{TemplateBinding NumericalSignCommand}">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button"
+                                     Binding="{TemplateBinding IsNumericalSignButtonVisible}"
+                                     Value="True">
+                            <Setter Property="IsVisible" Value="True"/>
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+            </Grid>
+        </pancakeView:PancakeView>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="ScreenInputEntryField">
+        <StackLayout BindingContext="{Binding Source={RelativeSource TemplatedParent}}">
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer
+                    Command="{TemplateBinding IsSelectedCommand}"
+                    NumberOfTapsRequired="1"/>
+            </StackLayout.GestureRecognizers>
+            <custom:CustomEntry AutomationId="InputUnit1CustomButton"
+                                x:Name="CustomButtonInputValue1"
+                                MaxLength="{TemplateBinding InputMaxLength}"
+                                IsSelected="{TemplateBinding IsSelected}"
+                                FontSize="{TemplateBinding FontSize}"
+                                Text="{TemplateBinding ScreenInputValue}"
+                                Style="{StaticResource ConverterCalculatorInputEntry}">
+            </custom:CustomEntry>
+        </StackLayout>
+    </ControlTemplate>
+</ResourceDictionary>

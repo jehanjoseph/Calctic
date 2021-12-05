@@ -1,0 +1,22 @@
+[
+  {
+    "Symbol": "h",
+    "Name": "Hour"
+  },
+  {
+    "Symbol": "m",
+    "Name": "Minute"
+  },
+  {
+    "Symbol": "s",
+    "Name": "Second"
+  },
+  {
+    "Symbol": "ms",
+    "Name": "Millisecond"
+  },
+  {
+    "Symbol": "μs",
+    "Name": "Microsecond"
+  }
+]

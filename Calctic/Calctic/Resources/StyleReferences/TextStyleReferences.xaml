@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:custom="clr-namespace:Calctic.Extensions.CustomControls"
+    x:Class="Calctic.Resources.StyleReferences.TextStyleReferences">
+
+    <Style x:Key="ConverterCalculatorProperies" TargetType="Entry">
+        <Setter Property="FontSize" Value="Large"/>
+        <Setter Property="IsReadOnly" Value="True"/>
+        <Setter Property="InputTransparent" Value="True"/>
+        <Setter Property="HorizontalTextAlignment" Value="End"/>
+    </Style>
+
+    <Style x:Key="ConverterCalculatorInput" TargetType="Entry"
+           BasedOn="{StaticResource ConverterCalculatorProperies}"
+           ApplyToDerivedTypes="True">
+        <Style.Triggers>
+            <Trigger TargetType="custom:BorderlessEntry" Property="IsSelected" Value="true">
+                <Setter Property="TextColor" Value="PaleVioletRed"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="ConverterCalculatorInputEntry" TargetType="Entry"
+           BasedOn="{StaticResource ConverterCalculatorProperies}"
+           ApplyToDerivedTypes="True">
+        <Style.Triggers>
+            <Trigger TargetType="custom:CustomEntry" Property="IsSelected" Value="true">
+                <Setter Property="TextColor" Value="PaleVioletRed"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

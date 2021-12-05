@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:fonts="clr-namespace:FontAwesome"
+    xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:styles="clr-namespace:Calctic.Resources.StyleReferences"
+    xmlns:converters="clr-namespace:Calctic.Converters"
+    x:Class="Calctic.View.Calculators.BasicCalculatorPage"
+    xmlns:app="clr-namespace:Calctic"
+    BackgroundColor="{StaticResource AppBackgroundColor}"
+    BindingContext="{x:Static app:ViewModelLocator.BasicCalculatorPageViewModel}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <styles:ButtonStyleReferences/>
+                <styles:FrameStyleReferences/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        <converters:LabelLengthMaxConverter x:Key="LabelMaxLengthConverter"/>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="HistoryLogs"
+                     Order="Primary"
+                     Priority="0"
+                     Command="{Binding HistoryLogsCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="FontAwesomeRegular"
+                                 Size="Title"
+                                 Glyph="{x:Static fonts:FontAwesomeIcons.History}"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <Label AutomationId="TitleLabel"
+                   HorizontalOptions="CenterAndExpand"
+                   TextColor="{StaticResource BasicCalculatorBackgroundColor}"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   Text="{Binding Title}"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!--#region Calculator Screen -->
+                <StackLayout BackgroundColor="Transparent" 
+                             Margin="3,3,3,0">
+                    <Grid VerticalOptions="FillAndExpand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="0.33*"/>
+                        </Grid.RowDefinitions>
+
+                        <CollectionView AutomationId="PreviousComputationsCollectionView"
+                            x:Name="CalculatorLogs"
+                            ItemsSource="{Binding Results}"
+                            ItemsUpdatingScrollMode="KeepLastItemInView"
+                            VerticalOptions="Start"
+                            SelectionMode="Single"
+                            SelectedItem="{Binding SelectedResult, Mode=TwoWay}">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Vertical" ItemSpacing="2"/>
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout Style="{StaticResource CollectionViewSelected}">
+                                        <Frame x:Name="CalculatorLogsItemFrame"
+                                            Padding="5, 0, 5, 0"
+                                            Margin="5"
+                                            VerticalOptions="Center"
+                                            StyleClass="RoundedFrame">
+                                            <Label AutomationId="SelectedResultLabel"
+                                                   Text="{Binding Message}"
+                                                   HorizontalTextAlignment="End"
+                                                   FontSize="Title"
+                                                   TextColor="Green"/>
+                                        </Frame>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                        <StackLayout VerticalOptions="End" Grid.Row="1" x:Name="CalculatorInputLayout">
+                            <ScrollView x:Name="CalculatorInputScroll"
+                                    Orientation="Vertical">
+                                <Frame
+                                    HasShadow="False"
+                                    CornerRadius="13"
+                                    BackgroundColor="Transparent"
+                                    Padding="15, 0, 5, 5"
+                                    Margin="6, 0, 6, 0">
+                                    <Label AutomationId="InputCalculatorLabel"
+                                        x:Name="CalculatorOutputLabel"
+                                        FontSize="30"
+                                        Text="{Binding ScreenInput, Mode=TwoWay}"
+                                        TextColor="Black"
+                                        HorizontalOptions="End"
+                                        VerticalTextAlignment="Center"/>
+                                </Frame>
+                            </ScrollView>
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
+                <!--#endregion-->
+
+                <!--#region Calculator Buttons -->
+                <pancakeView:PancakeView
+                                Margin="5, 0, 5, 0"
+                                Padding="5"
+                                CornerRadius="20"
+                                Grid.Row="1">
+                    <Grid Padding="5" VerticalOptions="FillAndExpand">
+                        <Grid.Resources>
+                            <Style TargetType="Button" BasedOn="{StaticResource BasicCalculatorStyle}">
+                                <Setter Property="BackgroundColor" Value="{StaticResource ButtonCalculatorColor}"/>
+                                <Setter Property="Command" Value="{Binding InputCommand}"/>
+                                <Setter Property="CommandParameter" Value="{Binding Source={RelativeSource Self}}"/>
+                            </Style>
+                        </Grid.Resources>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/> 
+                        </Grid.RowDefinitions>
+
+                        <Button AutomationId="AcButton"
+                            Text="AC"
+                            Command="{Binding ClearAllInputCommand}"/>
+                        <Button AutomationId="EraseButton"
+                            Grid.Column="1"
+                            Text="CE"
+                            Command="{Binding EraseInputCommand}"/>
+                        <Button AutomationId="PercentButton"
+                            Grid.Column="2"
+                            Text="%"
+                            Command="{Binding PercentCommand}"/>
+                        <Button AutomationId="DivisionButton"
+                            x:Name="ButtonDivision"
+                            Grid.Column="3"
+                            Text="÷"
+                            Command="{Binding InputBasicMathOperationCommand}"/>
+
+                        <Button AutomationId="Number7Button"
+                            x:Name="Button7"
+                            Grid.Row="1"
+                            Text="7"/>
+                        <Button AutomationId="Number8Button"
+                            x:Name="Button8"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Text="8"/>
+                        <Button AutomationId="Number9Button"
+                            x:Name="Button9"
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            Text="9"/>
+                        <Button AutomationId="MultiplicationButton"
+                            x:Name="ButtonMultiply"
+                            Grid.Row="1"
+                            Grid.Column="3"
+                            Text="ｘ"
+                            Command="{Binding InputBasicMathOperationCommand}"/>
+
+                        <Button AutomationId="Number4Button"
+                            x:Name="Button4"
+                            Grid.Row="2"
+                            Text="4"/>
+                        <Button AutomationId="Number5Button"
+                            x:Name="Button5"
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Text="5"/>
+                        <Button AutomationId="Number6Button"
+                            x:Name="Button6"
+                            Grid.Row="2"
+                            Grid.Column="2"
+                            Text="6"/>
+                        <Button AutomationId="SubtractionButton"
+                            x:Name="ButtonMinus"
+                            Grid.Row="2"
+                            Grid.Column="3"
+                            Text="－"
+                            Command="{Binding InputBasicMathOperationCommand}"/>
+
+                        <Button AutomationId="Number1Button"
+                            x:Name="Button1"
+                            Grid.Row="3"
+                            Text="1"/>
+                        <Button AutomationId="Number2Button"
+                            x:Name="Button2"
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            Text="2"/>
+                        <Button AutomationId="Number3Button"
+                            x:Name="Button3"
+                            Grid.Row="3"
+                            Grid.Column="2"
+                            Text="3"/>
+                        <Button AutomationId="AdditionButton"
+                            x:Name="ButtonAddition"
+                            Grid.Row="3"
+                            Grid.Column="3"
+                            Text="＋"
+                            Command="{Binding InputBasicMathOperationCommand}"/>
+
+                        <Button AutomationId="NumberZeroButton"
+                            x:Name="ButtonZero"
+                            Grid.Row="4"
+                            Text="0"/>
+                        <Button AutomationId="PeriodButton"
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            Text="."
+                            Command="{Binding PeriodCommand}"/>
+                        <Button AutomationId="NnumericalSignButton"
+                            Grid.Row="4"
+                            Grid.Column="2"
+                            Text="+/-"
+                            Command="{Binding NumericalSignCommand}"/>
+                        <Button AutomationId="EqualButton"
+                            Grid.Row="4"
+                            Grid.Column="3"
+                            Text="="
+                            Command="{Binding ExecuteMathCommand}"/>
+                    </Grid>
+                </pancakeView:PancakeView>
+                <!--#endregion-->
+            
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

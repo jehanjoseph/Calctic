@@ -1,0 +1,14 @@
+[
+  {
+    "Symbol": "°C",
+    "Name": "Celsius"
+  },
+  {
+    "Symbol": "°F",
+    "Name": "Fahrenheit"
+  },
+  {
+    "Symbol": "K",
+    "Name": "Kelvin"
+  }
+]

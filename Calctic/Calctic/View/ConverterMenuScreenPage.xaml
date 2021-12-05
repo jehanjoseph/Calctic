@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:styles="clr-namespace:Calctic.Resources.StyleReferences"
+    xmlns:app="clr-namespace:Calctic"
+    x:Class="Calctic.View.ConverterMenuScreenPage"
+    BackgroundColor="{StaticResource AppBackgroundColor}"
+    BindingContext="{x:Static app:ViewModelLocator.ConverterMenuScreenPageViewModel}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <styles:ButtonStyleReferences/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid VerticalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.2*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="0.25*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.05*"/>
+                <ColumnDefinition Width="0.9*"/>
+                <ColumnDefinition Width="0.05*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label AutomationId="TitleLabel"
+                   Grid.Column="1"
+                   TextColor="{StaticResource ButtonConverterColor}"
+                   VerticalTextAlignment="Center"
+                   HorizontalTextAlignment="Center"
+                   FontAttributes="Bold"
+                   FontSize="35"
+                   Text="{Binding Title}"
+                   Margin="10,10,10,30"/>
+
+            <pancakeView:PancakeView
+                   Grid.Row="1"
+                   Grid.Column="1"
+                   BackgroundColor="#FBF5FF"
+                   VerticalOptions="FillAndExpand"
+                   HorizontalOptions="FillAndExpand"
+                   CornerRadius="30"
+                   Margin="10">
+                <pancakeView:PancakeView.Border>
+                    <pancakeView:Border Color="#929292" Thickness="1"/>
+                </pancakeView:PancakeView.Border>
+                    <StackLayout Padding="10, 50, 10, 50">
+                        <StackLayout.Resources>
+                            <Style TargetType="Button" BasedOn="{StaticResource BasicCalculatorStyle}">
+                                <Setter Property="FontSize" Value="Small"/>
+                                <Setter Property="FontAttributes" Value="Bold"/>
+                                <Setter Property="TextColor" Value="White"/>
+                                <Setter Property="VerticalOptions" Value="Fill"/>
+                                <Setter Property="HorizontalOptions" Value="Fill"/>
+                                <Setter Property="Margin" Value="5"/>
+                                <Setter Property="Grid.ColumnSpan" Value="2"/>
+                            </Style>
+                        </StackLayout.Resources>
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                        <Button AutomationId="LengthConverterButton"
+                                BackgroundColor="{StaticResource ButtonConverterColor}"
+                                Text="Length"
+                                Command="{Binding LengthConverterCommand}"/>
+                        
+                        <Button AutomationId="VolumeConverterButton" Grid.Column="2"
+                                BackgroundColor="{StaticResource ButtonConverterColor}"
+                                Text="Volume"
+                                Command="{Binding VolumeConverterCommand}"/>
+
+                        <Button AutomationId="WeightConverterButton" Grid.Row="1"
+                                BackgroundColor="{StaticResource ButtonConverterColor}"
+                                Text="Weight"
+                                Command="{Binding WeightConverterCommand}"/>
+
+                        <Button AutomationId="TimeConverterButton" Grid.Row="1" Grid.Column="2"
+                                BackgroundColor="{StaticResource ButtonConverterColor}"
+                                Text="Time"
+                                Command="{Binding TimeConverterCommand}"/>
+
+                        <Button AutomationId="TemperatureButton" Grid.Row="2"
+                                BackgroundColor="{StaticResource ButtonConverterColor}"
+                                Text="Temperature"
+                                Command="{Binding TemperatureConverterCommand}"/>
+
+                        <Button AutomationId="SpeedConverterButton" Grid.Row="2" Grid.Column="2"
+                                BackgroundColor="{StaticResource ButtonConverterColor}"
+                                Text="Speed"
+                                Command="{Binding SpeedConverterCommand}"/>
+
+                        <Button AutomationId="CurrencncyConverterButton" Grid.Row="3" Grid.Column="1"
+                                BackgroundColor="{StaticResource ButtonConverterColor}"
+                                Text="Currency"
+                                Command="{Binding CurrencyConverterCommand}"/>
+                        </Grid>
+                    </StackLayout>
+            </pancakeView:PancakeView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

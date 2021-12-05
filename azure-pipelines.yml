@@ -1,0 +1,145 @@
+trigger:
+  branches:
+    include:
+    - release/*
+    - develop
+
+pr: none 
+
+pool:
+  vmImage: 'macos-latest'
+
+variables:
+  - group: Calctic
+  - group: General
+
+stages:
+- stage: BuildApps
+  displayName: "Build Xamarin Project"
+  jobs:
+  - job: BuildAndroidAndiOS
+    displayName: "Build Android & iOS"
+    steps:
+    - script: dotnet tool update --global boots
+      displayName: Install Boots
+    - script: boots --stable Xamarin.Android
+      displayName: Setup Xamarin Android
+    - script: boots --stable Xamarin.iOS
+      displayName: Setup Xamarin iOS
+    - script: boots --stable Mono
+      displayName: Setup Mono
+    - task: NuGetToolInstaller@1
+    - task: NuGetCommand@2
+      inputs:
+       restoreSolution: '**/*.sln'
+    
+    - script: echo '##vso[task.setvariable variable=JI_JAVA_HOME]$(JAVA_HOME_11_X64)'
+      displayName: set JI_JAVA_HOME
+
+    - script: |
+        export JI_JAVA_HOME="$JAVA_HOME_11_X64"
+      displayName: Set Java Home Path
+    
+    - task: JavaToolInstaller@0
+      inputs:
+        versionSpec: '11'
+        jdkArchitectureOption: 'x64'
+        jdkSourceOption: 'PreInstalled'
+  
+    - task: android-manifest-version@1
+      displayName: "Increment Android Build Version"
+      inputs:
+        sourcePath: '$(android.androidManifestPath)'
+        versionCodeOption: 'buildid'
+        versionCode: '$(Build.BuildId)'
+        printFile: true
+    
+    - task: Bash@3
+      displayName: "Build Android using Bash"
+      inputs:
+        filePath: 'Config/build-android.sh'
+        arguments: '"$(android.projectPath)" "$(buildConfiguration)" "$(outputDirectory)/android"'
+    
+    - task: DownloadSecureFile@1
+      displayName: "Download Keystore File"
+      name: 'AndroidKeyStore'
+      inputs:
+        secureFile: '$(android.keystoreFile)'
+        
+    - task: InstallBundletool@1
+      inputs:
+        username: '$(githubUsername)'
+        personalAccessToken: '$(githubApiToken)'
+    
+    - task: AabConvertToUniversalApk@1
+      inputs:
+        aabFilePath: '$(android.aabFilePath)'
+        keystoreFilePath: '$(AndroidKeyStore.secureFilePath)'
+        keystorePassword: '$(keystorePassword)'
+        keystoreAlias: '$(android.keyAlias)'
+        keystoreAliasPassword: '$(keystorePassword)'
+        outputFolder: '$(outputDirectory)/android'
+
+    - task: CmdLine@2
+      displayName: "Rename universal APK File"
+      inputs:
+        script: 'mv $(outputDirectory)/android/universal.apk $(android.apkFilePath)'
+
+    - task: PublishPipelineArtifact@1
+      displayName: "Publish Signed APK File"
+      inputs:
+        targetPath: '$(android.apkFilePath)'
+        artifactName: AndroidArtifactApk
+
+    - task: CmdLine@2
+      displayName: "Android Signing"
+      inputs:
+        script: 'jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 
+        -keystore $(AndroidKeyStore.secureFilePath)
+        -storepass $(keystorePassword) 
+        -keypass $(keystorePassword) 
+        $(android.aabFilePath) 
+        $(android.keyAlias)'
+
+    - task: PublishPipelineArtifact@1
+      displayName: "Publish Signed Android AAB File"
+      inputs:
+        targetPath: '$(android.aabFilePath)'
+        artifactName: AndroidArtifactAabSigned
+
+    - task: InstallAppleCertificate@2
+      inputs:
+        certSecureFile: '$(ios.certificate)'
+        certPwd: '$(keystorePassword)'
+        keychain: 'temp'
+    
+    - task: InstallAppleProvisioningProfile@1
+      inputs:
+        provisioningProfileLocation: 'secureFiles'
+        provProfileSecureFile: '$(ios.appstoreProvisioningProfile)'
+    
+    - task: ios-bundle-version@1
+      displayName: "Increment iOS Build Version"
+      inputs:
+        sourcePath: '$(ios.infoPath)'
+        versionCodeOption: 'buildid'
+        versionCode: '$(Build.BuildId)'
+        printFile: true
+    
+    - task: Bash@3
+      displayName: "Build iOS using Bash"
+      inputs:
+        filePath: 'Config/build-ios.sh'
+        arguments: '"$(ios.projectPath)" "$(buildConfiguration)" "true" "iPhone" "$(outputDirectory)/ios" "$(APPLE_CERTIFICATE_SIGNING_IDENTITY)" "$(APPLE_PROV_PROFILE_UUID)"'
+    
+    - task: PublishPipelineArtifact@1
+      displayName: "Publish IPA file"
+      inputs:
+        targetPath: '$(outputDirectory)/ios'
+        artifactName: iOSArtifact
+
+    - task: PublishPipelineArtifact@1
+      displayName: "Publish Entitlements"
+      inputs:
+        targetPath: '$(ios.entitlementsPath)'
+        artifactName: Entitlements

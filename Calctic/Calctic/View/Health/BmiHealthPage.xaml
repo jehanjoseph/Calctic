@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:custom="clr-namespace:Calctic.Extensions.CustomControls"
+    xmlns:styles="clr-namespace:Calctic.Resources.StyleReferences"
+    xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+    x:Class="Calctic.View.Health.BmiHealthPage"
+    xmlns:app="clr-namespace:Calctic"
+    BindingContext="{x:Static app:ViewModelLocator.BmiHealthPageViewModel}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <styles:ButtonStyleReferences/>
+                <styles:FrameStyleReferences/>
+                <styles:TextStyleReferences/>
+                <styles:CalculatorStyleReferences/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="{StaticResource AppBackgroundColor}"
+                     VerticalOptions="FillAndExpand">
+            <Label AutomationId="PageTitleLabel"
+                   HorizontalOptions="CenterAndExpand"
+                   TextColor="{StaticResource ButtonHealthColor}"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   Text="{Binding Title}"/>
+            <Grid VerticalOptions="FillAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.3*"/>
+                    <RowDefinition Height="0.3*"/>
+                    <RowDefinition Height="0.3*"/>
+                    <RowDefinition Height="0.1*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="0.6*"/>
+                    <ColumnDefinition Width="0.2*"/>
+                </Grid.ColumnDefinitions>
+
+                <!--#region Gender Selection Input -->
+                <StackLayout VerticalOptions="FillAndExpand"
+                             Orientation="Horizontal"
+                             Grid.ColumnSpan="3">
+                    <StackLayout.Resources>
+                        <Style TargetType="custom:CustomButton" BasedOn="{StaticResource ClickableLabelBorderColorClick}">
+                            <Setter Property="FontSize">
+                                <OnPlatform x:TypeArguments="x:Double"
+                                            iOS="80"
+                                            Android="100"/>
+                            </Setter>
+                        </Style>
+                    </StackLayout.Resources>
+                    <custom:CustomButton AutomationId="MaleGenderButton"
+                                         Text="&#x2642;"
+                                         HorizontalOptions="FillAndExpand"
+                                         IsSelected="{Binding IsMaleGenderSelected, Mode=TwoWay}"
+                                         Command="{Binding MaleGenderSelectedCommand}"/>
+                    <custom:CustomButton AutomationId="FemaleGenderButton"
+                                         Text="&#x2640;"
+                                         HorizontalOptions="FillAndExpand"
+                                         IsSelected="{Binding IsFemaleGenderSelected, Mode=TwoWay}"
+                                         Command="{Binding FemaleGenderSelectedCommand}"/>
+                </StackLayout>
+                <!--#endregion-->
+
+                <!--#region Height Input -->
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <StackLayout VerticalOptions="FillAndExpand"
+                                 Orientation="Vertical">
+                        <Label Text="Height (cm)"
+                               HorizontalTextAlignment="Center"/>
+                        <material:MaterialTextField AutomationId="HeightInputEntry"
+                               InputType="Numeric"
+                               BackgroundColor="White"
+                               AlwaysShowUnderline="True"
+                               ErrorText="Height must not be blank"
+                               FloatingPlaceholderEnabled="False"
+                               IsMaxLengthCounterVisible="False"
+                               HorizontalPadding="100, 10"
+                               MaxLength="{Binding InputHeightMaxLength, Mode=TwoWay}"
+                               HasError="{Binding IsHeightInputInvalid}"
+                               Text="{Binding ScreenInputHeight, Mode=TwoWay}">
+                            <material:MaterialTextField.TextFontSize>
+                                <OnPlatform x:TypeArguments="x:Double"
+                                            iOS="20"
+                                            Android="20"/>
+                            </material:MaterialTextField.TextFontSize>
+                        </material:MaterialTextField>
+                    </StackLayout>
+                </Grid>
+                <!--#endregion-->
+
+                <!--#region Weight Input -->
+                <Grid Grid.Row="2" Grid.Column="1">
+                    <StackLayout VerticalOptions="FillAndExpand"
+                                 WidthRequest="150"
+                                 Orientation="Vertical">
+                        <Label Text="Weight (Kg)"
+                               HorizontalTextAlignment="Center"/>
+                        <material:MaterialTextField AutomationId="WeightInputEntry"
+                               InputType="Numeric"
+                               BackgroundColor="White"
+                               AlwaysShowUnderline="True"
+                               ErrorText="Weight must not be blank"
+                               FloatingPlaceholderEnabled="False"
+                               IsMaxLengthCounterVisible="False"
+                               HorizontalPadding="100, 10"
+                               MaxLength="{Binding InputWeightMaxLength}"
+                               HasError="{Binding IsWeightInputInvalid}"
+                               Text="{Binding ScreenInputWeight, Mode=TwoWay}">
+                            <material:MaterialTextField.TextFontSize>
+                                <OnPlatform x:TypeArguments="x:Double"
+                                            iOS="20"
+                                            Android="20"/>
+                            </material:MaterialTextField.TextFontSize>
+                        </material:MaterialTextField>
+                    </StackLayout>
+                </Grid>
+                <!--#endregion-->
+
+                <!--#region Calculate Button -->
+                <StackLayout Grid.Row="3"
+                             Grid.ColumnSpan="3"
+                             Margin="5,0,15,10"
+                             HorizontalOptions="EndAndExpand">
+                     <Button AutomationId="CalculateAnswerButton"
+                             Padding="10"
+                             BackgroundColor="{StaticResource ButtonHealthColor}"
+                             Style="{StaticResource BasicCalculatorStyle}"
+                             FontSize="Medium"
+                             Text="Calculate"
+                             Command="{Binding CalculateAnswerCommand}"/>
+                </StackLayout>
+                <!--#endregion-->
+
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

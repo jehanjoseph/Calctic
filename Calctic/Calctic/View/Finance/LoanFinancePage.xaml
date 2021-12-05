@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:custom="clr-namespace:Calctic.Extensions.CustomControls"
+    xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:styles="clr-namespace:Calctic.Resources.StyleReferences"
+    x:Class="Calctic.View.Finance.LoanFinancePage"
+    xmlns:app="clr-namespace:Calctic"
+    BindingContext="{x:Static app:ViewModelLocator.LoanFinancePageViewModel}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <styles:ButtonStyleReferences/>
+                <styles:FrameStyleReferences/>
+                <styles:TextStyleReferences/>
+                <styles:CalculatorStyleReferences/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="{StaticResource AppBackgroundColor}"
+                     VerticalOptions="FillAndExpand">
+            <Label AutomationId="PageTitleLabel"
+                   HorizontalOptions="CenterAndExpand"
+                   TextColor="{StaticResource ButtonFinanceColor}"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   Text="{Binding Title}"/>
+            <Grid VerticalOptions="FillAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.3*"/>
+                    <RowDefinition Height="0.6*"/>
+                    <RowDefinition Height="0.1*"/>
+                </Grid.RowDefinitions>
+
+                <!--#region Input Fields -->
+                <StackLayout Padding="10,0,0,0" Margin="10,5,10,0" VerticalOptions="FillAndExpand">
+                    <Grid Padding="0" VerticalOptions="FillAndExpand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.3*"/>
+                            <ColumnDefinition Width="0.7*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.Resources>
+                            <Style TargetType="Label">
+                                <Setter Property="VerticalOptions">
+                                    <OnPlatform x:TypeArguments="LayoutOptions">
+                                        <On Platform="Android" Value="End"/>
+                                        <On Platform="iOS" Value="Center"/>
+                                    </OnPlatform>
+                                </Setter>
+                            </Style>
+                        </Grid.Resources>
+
+                        <Label Text="Loan Amount" FontSize="Small"/>
+                        <Label Grid.Row="1" Text="Interest (Per Year)" FontSize="Small"/>
+                        <Label Grid.Row="2" Text="Period (Months)" FontSize="Small"/>
+
+                        <custom:CalculatorInputFieldEntry AutomationId="LoanInputEntry"
+                                            Grid.Column="1"
+                                            IsSelected="{Binding IsLoanValueSelected}"
+                                            InputMaxLength="19"
+                                            FontSize="20"
+                                            IsSelectedCommand="{Binding BalanceValueCommand}"
+                                            ScreenInputValue="{Binding LoanValue, Mode=TwoWay}"
+                                            ControlTemplate="{StaticResource ScreenInputEntryField}"/>
+                        <custom:CalculatorInputFieldEntry AutomationId="RateInputEntry"
+                                            Grid.Column="1" Grid.Row="1"
+                                            IsSelected="{Binding IsRateValueSelected}"
+                                            InputMaxLength="19"
+                                            FontSize="20"
+                                            IsSelectedCommand="{Binding ContributionValueCommand}"
+                                            ScreenInputValue="{Binding RateValue, Mode=TwoWay}"
+                                            ControlTemplate="{StaticResource ScreenInputEntryField}"/>
+                        <custom:CalculatorInputFieldEntry AutomationId="PeriodInputEntry"
+                                            Grid.Column="1" Grid.Row="2"
+                                            IsSelected="{Binding IsPeriodValueSelected}"
+                                            InputMaxLength="19"
+                                            FontSize="20"
+                                            IsSelectedCommand="{Binding InterestValueCommand}"
+                                            ScreenInputValue="{Binding PeriodValue, Mode=TwoWay}"
+                                            ControlTemplate="{StaticResource ScreenInputEntryField}"/>
+                    </Grid>
+                </StackLayout>
+                <!--#endregion-->
+
+                <!--#region Number Inputs -->
+                <custom:CalculatorInputKeypadView AutomationId="LoanCalculatorInputKeypadView"
+                                        Grid.Row="1"
+                                        IsVisible="{Binding IsCalculatorInputVisible}"
+                                        InputCommand="{Binding InputCommand}"
+                                        ClearAllInputCommand="{Binding ClearAllInputCommand}"
+                                        EraseInputCommand="{Binding EraseInputCommand}"
+                                        PeriodCommand="{Binding PeriodCommand}"
+                                        KeyboardBackgroundColor="{StaticResource ButtonFinanceColor}"
+                                        ControlTemplate="{StaticResource CalculatorKeypadControlTemplate}"/>
+                <!--#endregion-->
+
+                <!--#region Loan Calculator Result -->
+                <pancakeView:PancakeView
+                    Grid.Row="1"
+                    IsVisible="{Binding IsAnswerVisible}"
+                    BackgroundColor="#FBF5FF"
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand"
+                    CornerRadius="20"
+                    Margin="9">
+                    <StackLayout Padding="35, 50, 35, 50">
+                        <StackLayout.Resources>
+                            <Style TargetType="Label">
+                                <Setter Property="FontSize">
+                                    <OnPlatform x:TypeArguments="x:Double"
+                                                iOS="23"
+                                                Android="20"/>
+                                </Setter>
+                            </Style>
+                        </StackLayout.Resources>
+                        <Label Text="Results" TextColor="{StaticResource ButtonFinanceColor}"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"/>
+                            <Grid
+                                HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label HorizontalOptions="Start" VerticalOptions="CenterAndExpand"
+                                       Text="Interest"/>
+                                <Label HorizontalOptions="Start" VerticalOptions="CenterAndExpand"
+                                       Grid.Row="1"
+                                       Text="Monthly Pay"/>
+                                <Label HorizontalOptions="Start" VerticalOptions="CenterAndExpand"
+                                       Grid.Row="2"
+                                       Text="Total Pay"/>
+                            
+                                <Label AutomationId="InterestPayAnswerLabel"
+                                       Grid.Column="1"
+                                       HorizontalOptions="End" VerticalOptions="CenterAndExpand"
+                                       Text="{Binding InterestPayAnswer, StringFormat='{0:F2}'}"/>
+                                <Label AutomationId="MonthlyPayAnswerLabel"
+                                       Grid.Column="1"
+                                       HorizontalOptions="End" VerticalOptions="CenterAndExpand"
+                                       Grid.Row="1"
+                                       Text="{Binding MonthlyPayAnswer, StringFormat='{0:F2}'}"/>
+                                <Label AutomationId="TotalPayAnswerLabel"
+                                       Grid.Column="1"
+                                       HorizontalOptions="End" VerticalOptions="CenterAndExpand"
+                                       Grid.Row="2"
+                                       Text="{Binding TotalPayAnswer, StringFormat='{0:F2}'}"/>
+                            </Grid>
+                    </StackLayout>
+                </pancakeView:PancakeView>
+                <!--#endregion-->
+
+                <!--#region Generate Button -->
+                <StackLayout Grid.Row="2"
+                             Margin="5,0,15,10"
+                             HorizontalOptions="EndAndExpand">
+                     <Button AutomationId="GenerateAnswerButton"
+                             Padding="10"
+                             BackgroundColor="{StaticResource ButtonFinanceColor}"
+                             Style="{StaticResource BasicCalculatorStyle}"
+                             FontSize="Medium"
+                             Text="{Binding GenerateAnswerText}"
+                             Command="{Binding GenerateAnswerCommand}"/>
+                </StackLayout>
+                <!--#endregion-->
+
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

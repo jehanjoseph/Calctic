@@ -1,0 +1,163 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <LangVersion>default</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <LangVersion>default</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+    <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
+    <PackageReference Include="Xamarin.Forms.PancakeView" Version="2.3.0.759" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.14" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
+    <PackageReference Include="Xamarin.CommunityToolkit" Version="1.3.0" />
+    <PackageReference Include="TinyIoC" Version="1.3.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="UnitsNet" Version="4.102.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Dangl.Calculator" Version="1.4.0" />
+    <PackageReference Include="XF.Material" Version="1.7.8" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="ViewModel\" />
+    <None Remove="View\" />
+    <None Remove="Refractored.MvvmHelpers" />
+    <None Remove="Xamarin.Forms.PancakeView" />
+    <None Remove="Rg.Plugins.Popup" />
+    <None Remove="Resources\" />
+    <None Remove="Resources\StyleReferences\" />
+    <None Remove="Xamarin.CommunityToolkit" />
+    <None Remove="Resources\Images\" />
+    <None Remove="Extension\" />
+    <None Remove="Resources\SharedAssets\Calculator-Menu-Screen.png" />
+    <None Remove="Converters\" />
+    <None Remove="Xamarin.Forms" />
+    <None Remove="TinyIoC" />
+    <None Remove="ViewModel\Basic Calculator\" />
+    <None Remove="ViewModel\Converters\" />
+    <None Remove="View\Calculators\" />
+    <None Remove="View\Converters\" />
+    <None Remove="UnitsNet" />
+    <None Remove="Extensions\Custom Controls\" />
+    <None Remove="ViewModel\Converters\Popups\" />
+    <None Remove="View\Converters\Popups\" />
+    <None Remove="Model\" />
+    <None Remove="Interfaces\" />
+    <None Remove="Helpers\" />
+    <None Remove="Services\" />
+    <None Remove="Model\UnitConverter\" />
+    <None Remove="Resources\JsonFiles\" />
+    <None Remove="Resources\JsonFiles\Converters\" />
+    <None Remove="Dependency\" />
+    <None Remove="Newtonsoft.Json" />
+    <None Remove="Dangl.Calculator" />
+    <None Remove="Model\CurrencyConverter\" />
+    <None Remove="Resources\JsonFiles\Currency\" />
+    <None Remove="Resources\JsonFiles\Currency\currency.json" />
+    <None Remove="Resources\JsonFiles\Currency\currency-names.json" />
+    <None Remove="Resources\JsonFiles\Converters\Length-Names.json" />
+    <None Remove="Resources\JsonFiles\Converters\Speed-Names.json" />
+    <None Remove="Resources\JsonFiles\Converters\Temperature-Names.json" />
+    <None Remove="Resources\JsonFiles\Converters\Time-Names.json" />
+    <None Remove="Resources\JsonFiles\Converters\Volume-Names.json" />
+    <None Remove="Resources\JsonFiles\Converters\Weight-Names.json" />
+    <None Remove="View\Finance\" />
+    <None Remove="ViewModel\Finance\" />
+    <None Remove="View\Health\" />
+    <None Remove="ViewModel\Health\" />
+    <None Remove="View\Health\Popups\" />
+    <None Remove="ViewModel\Health\Popups\" />
+    <None Remove="Model\Health\" />
+    <None Remove="Model\Health\BMI\" />
+    <None Remove="Model\Health\Age\" />
+    <None Remove="Model\BasicCalculator\" />
+    <None Remove="XF.Material" />
+    <None Remove="Xamarin.Plugin.Calendar" />
+    <None Remove="Helpers\Validation\" />
+    <None Remove="Resources\Fonts\" />
+    <None Remove="Resources\Fonts\Font Awesome 6 Brands-Regular-400.otf" />
+    <None Remove="Resources\Fonts\Font Awesome 6 Duotone-Solid-900.otf" />
+    <None Remove="Resources\Fonts\Font Awesome 6 Pro-Light-300.otf" />
+    <None Remove="Resources\Fonts\Font Awesome 6 Pro-Regular-400.otf" />
+    <None Remove="Resources\Fonts\Font Awesome 6 Pro-Solid-900.otf" />
+    <None Remove="Resources\Fonts\Font Awesome 6 Pro-Thin-100.otf" />
+    <None Remove="View\Calculators\Popups\" />
+    <None Remove="ViewModel\Calculators\Popups\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel\" />
+    <Folder Include="View\" />
+    <Folder Include="Resources\" />
+    <Folder Include="Resources\StyleReferences\" />
+    <Folder Include="Resources\SharedAssets\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Converters\" />
+    <Folder Include="ViewModel\Calculators\" />
+    <Folder Include="ViewModel\Converters\" />
+    <Folder Include="View\Calculators\" />
+    <Folder Include="View\Converters\" />
+    <Folder Include="Extensions\Custom Controls\" />
+    <Folder Include="ViewModel\Converters\Popups\" />
+    <Folder Include="View\Converters\Popups\" />
+    <Folder Include="Model\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Services\" />
+    <Folder Include="Model\UnitConverter\" />
+    <Folder Include="Resources\JsonFiles\" />
+    <Folder Include="Resources\JsonFiles\Converters\" />
+    <Folder Include="Dependency\" />
+    <Folder Include="Model\CurrencyConverter\" />
+    <Folder Include="Resources\JsonFiles\Currency\" />
+    <Folder Include="View\Finance\" />
+    <Folder Include="ViewModel\Finance\" />
+    <Folder Include="View\Health\" />
+    <Folder Include="ViewModel\Health\" />
+    <Folder Include="View\Health\Popups\" />
+    <Folder Include="ViewModel\Health\Popups\" />
+    <Folder Include="Model\Health\" />
+    <Folder Include="Model\Health\BMI\" />
+    <Folder Include="Model\Health\Age\" />
+    <Folder Include="Model\BasicCalculator\" />
+    <Folder Include="Helpers\Validation\" />
+    <Folder Include="Resources\Fonts\" />
+    <Folder Include="View\Calculators\Popups\" />
+    <Folder Include="ViewModel\Calculators\Popups\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\SharedAssets\Calculator-Menu-Screen.png" />
+    <EmbeddedResource Include="Resources\JsonFiles\Currency\currency.json" />
+    <EmbeddedResource Include="Resources\JsonFiles\Currency\currency-names.json" />
+    <EmbeddedResource Include="Resources\JsonFiles\Converters\Length-Names.json" />
+    <EmbeddedResource Include="Resources\JsonFiles\Converters\Speed-Names.json" />
+    <EmbeddedResource Include="Resources\JsonFiles\Converters\Temperature-Names.json" />
+    <EmbeddedResource Include="Resources\JsonFiles\Converters\Time-Names.json" />
+    <EmbeddedResource Include="Resources\JsonFiles\Converters\Volume-Names.json" />
+    <EmbeddedResource Include="Resources\JsonFiles\Converters\Weight-Names.json" />
+    <EmbeddedResource Include="Resources\Fonts\Font Awesome 6 Brands-Regular-400.otf" />
+    <EmbeddedResource Include="Resources\Fonts\Font Awesome 6 Duotone-Solid-900.otf" />
+    <EmbeddedResource Include="Resources\Fonts\Font Awesome 6 Pro-Light-300.otf" />
+    <EmbeddedResource Include="Resources\Fonts\Font Awesome 6 Pro-Regular-400.otf" />
+    <EmbeddedResource Include="Resources\Fonts\Font Awesome 6 Pro-Solid-900.otf" />
+    <EmbeddedResource Include="Resources\Fonts\Font Awesome 6 Pro-Thin-100.otf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="View\Calculators\BasicCalculatorPage.xaml.cs">
+      <DependentUpon>BasicCalculatorPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>

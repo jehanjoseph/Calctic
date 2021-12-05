@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:Calctic.Converters"
+    xmlns:custom="clr-namespace:Calctic.Extensions.CustomControls"
+    xmlns:styles="clr-namespace:Calctic.Resources.StyleReferences"
+    x:Class="Calctic.View.Converters.BaseConverterPage"
+    BackgroundColor="{StaticResource AppBackgroundColor}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <styles:ButtonStyleReferences/>
+                <styles:FrameStyleReferences/>
+                <styles:TextStyleReferences/>
+                <styles:CalculatorStyleReferences/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        <converters:LabelLengthMaxConverter x:Key="LabelMaxLengthConverter"/>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="FillAndExpand">
+            <Label HorizontalOptions="CenterAndExpand"
+                   TextColor="{StaticResource ButtonConverterColor}"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   Text="{Binding Title}"/>
+            <Grid VerticalOptions="FillAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.17*"/>
+                    <RowDefinition Height="0.17*"/>
+                    <RowDefinition Height="0.66*"/>
+                </Grid.RowDefinitions>
+
+                <!--#region First Converter Inputs -->
+                <StackLayout BackgroundColor="Transparent">
+                    <Grid Padding="0" VerticalOptions="CenterAndExpand">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.25*"/>
+                            <ColumnDefinition Width="0.75*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <custom:CustomButton
+                                AutomationId="InputUnit1PickerCustomButton"
+                                x:Name="InputUnit1"
+                                Command="{Binding InputUnitPicker1Command}"
+                                Style="{StaticResource ClickableLabelButton}"
+                                Text="{Binding InputUnit1.Symbol, Mode=TwoWay}"
+                                TextTransform="None"/>
+
+                        <StackLayout Grid.Column="1"
+                                     Margin="0,0,15,0"
+                                     Orientation="Vertical">
+                            <custom:CalculatorInputFieldEntry
+                                AutomationId="InputUnit1ScreenValueEntry"
+                                InputMaxLength="{Binding Input1MaxLength}"
+                                IsSelected="{Binding IsValue1Selected, Mode=TwoWay}"
+                                IsSelectedCommand="{Binding InputValue1SelectedCommand}"
+                                ScreenInputValue="{Binding ScreenInputValue1, Mode=TwoWay}"
+                                ControlTemplate="{StaticResource ScreenInputEntryField}"/>
+
+                            <Label AutomationId="InputUnit1NameLabel"
+                                   Text="{Binding InputUnit1.Name}"
+                                   HorizontalOptions="End"/>
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
+                <!--#endregion-->
+
+                <!--#region Second Converter Inputs -->
+                <StackLayout Grid.Row="1" BackgroundColor="Transparent">
+                    <Grid Padding="0" VerticalOptions="CenterAndExpand">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.25*"/>
+                            <ColumnDefinition Width="0.75*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <custom:CustomButton
+                                AutomationId="InputUnit2PickerCustomButton"
+                                x:Name="InputUnit2"
+                                Command="{Binding InputUnitPicker2Command}"
+                                Style="{StaticResource ClickableLabelButton}"
+                                Text="{Binding InputUnit2.Symbol, Mode=TwoWay}"
+                                TextTransform="None"/>
+
+                        <StackLayout Grid.Column="1"
+                                     Margin="0,0,15,0"
+                                     Orientation="Vertical">
+                            <custom:CalculatorInputFieldEntry
+                                AutomationId="InputUnit2ScreenValueEntry"
+                                InputMaxLength="{Binding Input2MaxLength}"
+                                IsSelected="{Binding IsValue2Selected, Mode=TwoWay}"
+                                IsSelectedCommand="{Binding InputValue2SelectedCommand}"
+                                ScreenInputValue="{Binding ScreenInputValue2, Mode=TwoWay}"
+                                ControlTemplate="{StaticResource ScreenInputEntryField}"/>
+
+                            <Label AutomationId="InputUnit2NameLabel"
+                                   Text="{Binding InputUnit2.Name}"
+                                   HorizontalOptions="End"/>
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
+                <!--#endregion-->
+
+                <!--#region Number Inputs -->
+                <custom:CalculatorInputKeypadView Grid.Row="2"
+                                AutomationId="BaseCalculatorInputKeypadView"
+                                InputCommand="{Binding InputCommand}"
+                                ClearAllInputCommand="{Binding ClearAllInputCommand}"
+                                EraseInputCommand="{Binding EraseInputCommand}"
+                                PeriodCommand="{Binding PeriodCommand}"
+                                NumericalSignCommand="{Binding NumericalSignCommand}"
+                                IsNumericalSignButtonVisible="{Binding IsNumericalSignVisible}"
+                                KeyboardBackgroundColor="{StaticResource ButtonConverterColor}"
+                                ControlTemplate="{StaticResource CalculatorKeypadControlTemplate}"/>
+                <!--#endregion-->
+            
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

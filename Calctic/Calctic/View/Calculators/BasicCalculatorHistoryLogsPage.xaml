@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:fonts="clr-namespace:FontAwesome"
+    xmlns:styles="clr-namespace:Calctic.Resources.StyleReferences"
+    x:Class="Calctic.View.Calculators.BasicCalculatorHistoryLogsPage"
+    xmlns:app="clr-namespace:Calctic"
+    BindingContext="{x:Static app:ViewModelLocator.BasicCalculatorHistoryLogsPageViewModel}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <styles:ButtonStyleReferences/>
+                <styles:FrameStyleReferences/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Delete"
+                     Order="Primary"
+                     Priority="0"
+                     Command="{Binding DeletePopupHistoryCommand}">
+                    <ToolbarItem.IconImageSource>
+            <FontImageSource FontFamily="FontAwesomeRegular"
+                                 Size="Title"
+                                 Glyph="{x:Static fonts:FontAwesomeIcons.TrashAlt}"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="Transparent" 
+                     Margin="10">
+            <Label AutomationId="TitleLabel"
+                   HorizontalOptions="CenterAndExpand"
+                   TextColor="{StaticResource BasicCalculatorBackgroundColor}"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   Text="{Binding Title}"/>
+            <Label AutomationId="TitleLabel"
+                   HorizontalOptions="CenterAndExpand"
+                   TextColor="{StaticResource BasicCalculatorBackgroundColor}"
+                   FontAttributes="Bold"
+                   FontSize="Small"
+                   Text="{Binding Subtitle}"/>
+            <CollectionView AutomationId="HistoryLogsCollectionView"
+                            EmptyView="No previous inputs to show"
+                            ItemsSource="{Binding HistoryLogItems}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="3"/>
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="5, 0, 5, 0"
+                                Margin="5"
+                                StyleClass="RoundedFrame">
+                            <StackLayout VerticalOptions="CenterAndExpand">
+                                <Label AutomationId="SelectedResultLabel"
+                                       Text="{Binding ScreenInputs}"
+                                       HorizontalTextAlignment="End"
+                                       FontSize="Large"/>
+
+                                <Label AutomationId="SelectedResultLabel"
+                                       Text="{Binding Message}"
+                                       HorizontalTextAlignment="End"
+                                       FontSize="Large"/>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

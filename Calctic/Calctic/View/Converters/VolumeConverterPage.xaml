@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<converters:BaseConverterPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:Calctic.View.Converters"
+    x:Class="Calctic.View.Converters.VolumeConverterPage"
+    xmlns:app="clr-namespace:Calctic"
+    BindingContext="{x:Static app:ViewModelLocator.VolumeConverterPageViewModel}">
+</converters:BaseConverterPage>
